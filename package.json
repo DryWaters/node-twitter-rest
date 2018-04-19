@@ -1,0 +1,23 @@
+{
+  "name": "twitter-rest",
+  "version": "1.0.0",
+  "description": "Twitter Rest API for CS 174 HW #5",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/DryWaters/node-twitter-rest.git"
+  },
+  "author": "Daniel Waters",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DryWaters/node-twitter-rest/issues"
+  },
+  "homepage": "https://github.com/DryWaters/node-twitter-rest#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "npm": "^5.8.0"
+  }
+}
