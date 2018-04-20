@@ -2,7 +2,9 @@ let request = '';
 const baseAPIUrl = 'http://localhost:3000/api/';
 const TYPE_OF_REQUEST = {
   ALL_TWEETS: '',
-  ALL_USERS: 'users'
+  ALL_USERS: 'users',
+  TWEET_BY_ID: 'tweet/',
+  USER_BY_SCREEN_NAME: 'user/'
 }
 
 init();
@@ -23,9 +25,25 @@ function init() {
       }
     }
   }
+
   document.getElementById('all-users').addEventListener('click', getAllUsers);
   document.getElementById('all-tweets').addEventListener('click', getAllTweets);
+  document.getElementById('tweet-by-id').addEventListener('click', getTweetById);
+  document.getElementById('user-by-screen-name').addEventListener('click', getUserByScreenName);
+}
 
+function getUserByScreenName() {
+  const userScreenName = document.getElementById('user-screen-name').value;
+  if (userScreenName) {
+    openRequest(TYPE_OF_REQUEST.USER_BY_SCREEN_NAME, userScreenName);
+  }
+}
+
+function getTweetById() {
+  const tweetId = document.getElementById('tweet-id').value;
+  if (tweetId) {
+    openRequest(TYPE_OF_REQUEST.TWEET_BY_ID, tweetId);
+  }
 }
 
 function getAllUsers() {
@@ -36,13 +54,21 @@ function getAllTweets() {
   openRequest(TYPE_OF_REQUEST.ALL_TWEETS);
 }
 
-function openRequest(typeOfRequest) {
+function openRequest(typeOfRequest, id) {
   let url = baseAPIUrl;
   switch (typeOfRequest) {
     case TYPE_OF_REQUEST.ALL_TWEETS:
       break;
     case TYPE_OF_REQUEST.ALL_USERS:
       url += TYPE_OF_REQUEST.ALL_USERS;
+      break;
+    case TYPE_OF_REQUEST.TWEET_BY_ID:
+      url += TYPE_OF_REQUEST.TWEET_BY_ID;
+      url += id
+      break;
+    case TYPE_OF_REQUEST.USER_BY_SCREEN_NAME:
+      url += TYPE_OF_REQUEST.USER_BY_SCREEN_NAME;
+      url += id
       break;
   }
 
@@ -51,7 +77,7 @@ function openRequest(typeOfRequest) {
       document.getElementById('json-return').innerHTML = request.responseText;
     }
   }
-  console.log(request);
+  console.log(url);
   request.open('GET', url);
   request.send();
 

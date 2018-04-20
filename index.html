@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +8,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
 </head>
+
 <body>
-  <button id="all-tweets">Get all tweets</button>
-  <button id="all-users">Get all users</button>
+  <div>
+    <button id="all-tweets">Get all tweets</button>
+  </div>
+  <div>
+    <button id="all-users">Get all users</button>
+  </div>
+  <div>
+    <input type="text" id="tweet-id" />
+    <button id="tweet-by-id">Get Tweet By Id</button>
+  </div>
+  <div>
+    <input type="text" id="user-screen-name" />
+    <button id="user-by-screen-name">Get User By Screen Name</button>
+  </div>
+
   <div id="json-return"></div>
 </body>
 <script src="main.js"></script>
+
 </html>

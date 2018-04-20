@@ -22,8 +22,8 @@ router
   .get(getTweetById);
 
 router
-  .route('/user/:user_id')
-  .get(getUserById);
+  .route('/user/:user_screen_name')
+  .get(getUserByScreenName);
 
 // Set Express to set the default entry point to be /api
 // for cleaner routing
@@ -76,8 +76,14 @@ function getTweetById(req, res) {
   res.json({ message: returnJson })
 }
 
-function getUserById(req, res) {
-  res.json({ message: `User with id ${req.params.user_id}` })
+function getUserByScreenName(req, res) {
+  let returnJson = {};
+  twitterJson.forEach(function(tweet) {
+    if (tweet.user.screen_name === req.params.user_screen_name) {
+      returnJson = tweet.user;
+    }
+  });
+  res.json({ message: returnJson })
 }
 
 // Start REST API Server on port 3000
