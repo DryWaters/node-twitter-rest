@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const router = express.Router();
 const twitterJson = require('./favs.json');
@@ -26,6 +27,8 @@ router
 
 // Set Express to set the default entry point to be /api
 // for cleaner routing
+app.options('*', cors());
+app.use(cors());
 app.use('/api', router);
 
 function getAllTweets(req, res) {
@@ -78,4 +81,6 @@ function getUserById(req, res) {
 }
 
 // Start REST API Server on port 3000
-app.listen(3000, () => console.log('Server running on port 3000'))
+app.listen(3000, function(req, res) {
+  console.log("Server running on port 3000");
+});

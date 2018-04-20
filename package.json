@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DryWaters/node-twitter-rest#readme",
   "dependencies": {
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "npm": "^5.8.0"
   }
