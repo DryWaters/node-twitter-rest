@@ -6,26 +6,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Twitter RESTful API Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+  <link href="./Twitter_Social_Icon_Square_Color.png" rel="shortcut icon" type="image/png" />
+  <link href="https://fonts.googleapis.com/css?family=Arimo:400,700" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 </head>
 
 <body>
-  <div>
-    <button id="all-tweets">Get all tweets</button>
+  <div class="headline">
+    <h1 class="headline__text">Twitter RESTful API</h1>
   </div>
-  <div>
-    <button id="all-users">Get all users</button>
-  </div>
-  <div>
-    <input type="text" id="tweet-id" />
-    <button id="tweet-by-id">Get Tweet By Id</button>
-  </div>
-  <div>
-    <input type="text" id="user-screen-name" />
-    <button id="user-by-screen-name">Get User By Screen Name</button>
-  </div>
-
-  <div id="json-return"></div>
+  <main class="container">
+    <div class="container__buttons">
+      <button class="btn" id="all-tweets">All Tweets</button>
+      <button class="btn" id="all-users">All Users</button>
+      <button class="btn" id="all-links">All Links</button>
+    </div>
+    <div class="container__table" id="json-return"></div>
+  </main>
 </body>
 <script src="main.js"></script>
 

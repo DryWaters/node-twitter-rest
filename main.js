@@ -3,6 +3,7 @@ const baseAPIUrl = 'http://localhost:3000/api/';
 const TYPE_OF_REQUEST = {
   ALL_TWEETS: '',
   ALL_USERS: 'users',
+  ALL_LINKS: 'links',
   TWEET_BY_ID: 'tweet/',
   USER_BY_SCREEN_NAME: 'user/'
 }
@@ -26,32 +27,10 @@ function init() {
     }
   }
 
-  document.getElementById('all-users').addEventListener('click', getAllUsers);
-  document.getElementById('all-tweets').addEventListener('click', getAllTweets);
-  document.getElementById('tweet-by-id').addEventListener('click', getTweetById);
-  document.getElementById('user-by-screen-name').addEventListener('click', getUserByScreenName);
-}
-
-function getUserByScreenName() {
-  const userScreenName = document.getElementById('user-screen-name').value;
-  if (userScreenName) {
-    openRequest(TYPE_OF_REQUEST.USER_BY_SCREEN_NAME, userScreenName);
-  }
-}
-
-function getTweetById() {
-  const tweetId = document.getElementById('tweet-id').value;
-  if (tweetId) {
-    openRequest(TYPE_OF_REQUEST.TWEET_BY_ID, tweetId);
-  }
-}
-
-function getAllUsers() {
-  openRequest(TYPE_OF_REQUEST.ALL_USERS);
-}
-
-function getAllTweets() {
-  openRequest(TYPE_OF_REQUEST.ALL_TWEETS);
+  // attach event listeners to buttons
+  document.getElementById('all-users').addEventListener('click', openRequest.bind(this, TYPE_OF_REQUEST.ALL_USERS));
+  document.getElementById('all-tweets').addEventListener('click', openRequest.bind(this, TYPE_OF_REQUEST.ALL_TWEETS));
+  document.getElementById('all-links').addEventListener('click', openRequest.bind(this, TYPE_OF_REQUEST.ALL_LINKS));
 }
 
 function openRequest(typeOfRequest, id) {
@@ -61,6 +40,9 @@ function openRequest(typeOfRequest, id) {
       break;
     case TYPE_OF_REQUEST.ALL_USERS:
       url += TYPE_OF_REQUEST.ALL_USERS;
+      break;
+    case TYPE_OF_REQUEST.ALL_LINKS:
+      url += TYPE_OF_REQUEST.ALL_LINKS;
       break;
     case TYPE_OF_REQUEST.TWEET_BY_ID:
       url += TYPE_OF_REQUEST.TWEET_BY_ID;
@@ -73,14 +55,41 @@ function openRequest(typeOfRequest, id) {
   }
 
   request.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById('json-return').innerHTML = request.responseText;
+    if (this.readyState === 4 && this.status === 200) {
+      if (typeOfRequest === TYPE_OF_REQUEST.ALL_LINKS) {
+        displayAllLinks(JSON.parse(request.responseText));
+      }
+      // document.getElementById('json-return').innerHTML = request.responseText;
     }
   }
   console.log(url);
   request.open('GET', url);
   request.send();
+}
 
+function displayAllLinks({message}) {
+  const table = document.createElement('table');
+  const header = table.createTHead();
+  const thead = header.insertRow(0);
+  thead.innerHTML = 'HTML Links';
 
-
+  const tbody = document.createElement('tbody');
+  
+  for (key in message) {
+    let tRow = tbody.insertRow(-1);
+    tRow.className = 'table--id';
+    let tCell = tRow.insertCell(0);
+    tCell.innerHTML = `Tweet with id: ${key}`;
+    message[key].forEach(function(url) {
+      tRow = tbody.insertRow(-1);
+      tCell = tRow.insertCell(0);
+      tCell.innerHTML = url;
+    })
+    table.appendChild(tbody);
+  }
+  
+  
+  document.getElementById('json-return').innerHTML = '';
+  document.getElementById('json-return').appendChild(table);
+  
 }

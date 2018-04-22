@@ -15,7 +15,7 @@ router
 
 router
   .route('/links')
-  .get(getExternalLinks);
+  .get(getAllLinks);
 
 router
   .route('/tweet/:tweet_id')
@@ -26,7 +26,8 @@ router
   .get(getUserByScreenName);
 
 // Set Express to set the default entry point to be /api
-// for cleaner routing
+// for cleaner routing, also use COR middleware for 
+// allowing cross-scripting to work
 app.options('*', cors());
 app.use(cors());
 app.use('/api', router);
@@ -62,8 +63,25 @@ function getAllUsers(req, res) {
   res.json({ message: returnJson });
 }
 
-function getExternalLinks(req, res) {
-  res.json({ message: 'All links' });
+function getAllLinks(req, res) {
+  let returnJson = {};
+  twitterJson.forEach(function(tweet, index) {
+    returnJson[tweet.id_str] = [];
+    checkLinksRecursively(tweet, returnJson[tweet.id_str]);   
+  });
+  res.json({ message: returnJson });
+}
+
+function checkLinksRecursively(obj, links) {
+  for (let prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if (typeof obj[prop] === 'object' && obj[prop] !== null) {
+        checkLinksRecursively(obj[prop], links);
+      } else if (typeof obj[prop] === 'string' && (obj[prop].startsWith('http://') || obj[prop].startsWith('https://'))) {
+        links.push(obj[prop]);
+      }
+    }
+  }
 }
 
 function getTweetById(req, res) {
@@ -88,5 +106,5 @@ function getUserByScreenName(req, res) {
 
 // Start REST API Server on port 3000
 app.listen(3000, function(req, res) {
-  console.log("Server running on port 3000");
+  console.log('Server running on port 3000');
 });
