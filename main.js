@@ -79,15 +79,12 @@ function openRequest(typeOfRequest, id) {
 function displayAllLinks(links) {
   const table = document.createElement('table');
   const tbody = document.createElement('tbody');
-  const header = document.createElement('h2');
-  header.innerHTML = 'All External Links';
-  header.className = 'table__header';
 
   for (key in links) {
     let tRow = tbody.insertRow(-1);
     let tCell = tRow.insertCell(0);
     tCell.className = 'table--id';
-    tCell.innerHTML = `Tweet with id: <span class='btn--tweet'><a onClick='openRequest(TYPE_OF_REQUEST.TWEET_BY_ID, ${key});'>${key}</a></span>`;
+    tCell.innerHTML = `Tweet with id: <span class='btn--link'><a onClick='openRequest(TYPE_OF_REQUEST.TWEET_BY_ID, "${key}");'>${key}</a></span>`;
     links[key].forEach(function (url) {
       tRow = tbody.insertRow(-1);
       tCell = tRow.insertCell(0);
@@ -96,16 +93,12 @@ function displayAllLinks(links) {
     table.appendChild(tbody);
   }
   document.getElementById('json-return').innerHTML = '';
-  document.getElementById('json-return').appendChild(header);
   document.getElementById('json-return').appendChild(table);
 }
 
 function displayAllUsers(users) {
   const table = document.createElement('table');
   const tbody = document.createElement('tbody');
-  const title = document.createElement('h2');
-  title.innerHTML = 'All Users';
-  title.className = 'table__header';
   const headerRow = table.insertRow(0);
   const userNameHeader = document.createElement('th');
   const screenNameHeader = document.createElement('th');
@@ -122,22 +115,17 @@ function displayAllUsers(users) {
     let tScreenName = tRow.insertCell(0);
     let tUserName = tRow.insertCell(0);
     tUserName.innerHTML = user.name;
-    tScreenName.innerHTML = user.screen_name;
+    tScreenName.innerHTML = `<span class='btn--link'><a onClick='openRequest(TYPE_OF_REQUEST.USER_BY_SCREEN_NAME, "${user.screen_name}");'>${user.screen_name}</a></span>`;
   });
   table.appendChild(tbody);
 
   document.getElementById('json-return').innerHTML = '';
-  document.getElementById('json-return').appendChild(title);
   document.getElementById('json-return').appendChild(table);
 }
 
 function displayAllTweets(tweets) {
-  console.log(tweets);
   const table = document.createElement('table');
   const tbody = document.createElement('tbody');
-  const title = document.createElement('h2');
-  title.innerHTML = 'All Tweets';
-  title.className = 'table__header';
   const headerRow = table.insertRow(0);
   const createdDateHeader = document.createElement('th');
   const idHeader = document.createElement('th');
@@ -158,14 +146,13 @@ function displayAllTweets(tweets) {
     let tId = tRow.insertCell(-1);
     let tCreatedDate = tRow.insertCell(-1);
     let tText = tRow.insertCell(-1);
-    tId.innerHTML = tweet.id_str;
+    tId.innerHTML = `<span class='btn--link'><a onClick='openRequest(TYPE_OF_REQUEST.TWEET_BY_ID, "${tweet.id_str}");'>${tweet.id_str}</a></span>`;
     let date = new Date(tweet.created_at);
-    tCreatedDate.innerHTML = tweet.created_at;
+    tCreatedDate.innerHTML = date.toLocaleString('en-US');
     tText.innerHTML = tweet.text;
   });
   table.appendChild(tbody);
 
   document.getElementById('json-return').innerHTML = '';
-  document.getElementById('json-return').appendChild(title);
   document.getElementById('json-return').appendChild(table);
 }

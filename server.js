@@ -39,7 +39,7 @@ function getAllTweets(req, res) {
     if (tweet.hasOwnProperty('created_at')) {
       returnJson[index].created_at = tweet.created_at;
     }
-    if (tweet.hasOwnProperty('id')) {
+    if (tweet.hasOwnProperty('id_str')) {
       returnJson[index].id_str = tweet.id_str;
     }
     if (tweet.hasOwnProperty('text')) {

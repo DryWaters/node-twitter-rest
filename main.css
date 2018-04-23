@@ -35,12 +35,6 @@ th, td {
   box-shadow: 2.5px 2.5px 1.25px 0px rgba(0,0,0,0.75);
 }
 
-.table__header {
-  font-size: 3em;
-  font-family: 'Arimo', sans-serif;
-  font-weight: bold;
-}
-
 .headline {
   background-color: #1DA1F2;
   text-align: center;
@@ -75,7 +69,7 @@ th, td {
   box-shadow: 5px 5px 2.55px 0px rgba(0,0,0,0.75);
 }
 
-.btn--tweet {
+.btn--link {
   padding: 5px;
   font-family: 'Arimo', sans-serif;
   background-color: #1DA1F2;
@@ -83,12 +77,12 @@ th, td {
   margin: 10px;
 }
 
-.btn--tweet:hover {
+.btn--link:hover {
   cursor: pointer;
   background-color: #657786;
   box-shadow: 5px 5px 2.55px 0px rgba(0,0,0,0.75);
 }
 
-.btn--tweet > a {
+.btn--link > a {
   color: white;
 }
