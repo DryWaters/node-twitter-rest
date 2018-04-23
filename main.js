@@ -64,6 +64,9 @@ function openRequest(typeOfRequest, id) {
         case TYPE_OF_REQUEST.ALL_USERS:
           displayAllUsers(parsedJson.message);
           break;
+        case TYPE_OF_REQUEST.ALL_TWEETS:
+          displayAllTweets(parsedJson.message);
+          break;
       }
 
     }
@@ -115,11 +118,50 @@ function displayAllUsers(users) {
   headerRow.appendChild(screenNameHeader);
 
   users.forEach(function (user) {
-    tRow = tbody.insertRow(-1);
-    tScreenName = tRow.insertCell(0);
-    tUserName = tRow.insertCell(0);
+    let tRow = tbody.insertRow(-1);
+    let tScreenName = tRow.insertCell(0);
+    let tUserName = tRow.insertCell(0);
     tUserName.innerHTML = user.name;
     tScreenName.innerHTML = user.screen_name;
+  });
+  table.appendChild(tbody);
+
+  document.getElementById('json-return').innerHTML = '';
+  document.getElementById('json-return').appendChild(title);
+  document.getElementById('json-return').appendChild(table);
+}
+
+function displayAllTweets(tweets) {
+  console.log(tweets);
+  const table = document.createElement('table');
+  const tbody = document.createElement('tbody');
+  const title = document.createElement('h2');
+  title.innerHTML = 'All Tweets';
+  title.className = 'table__header';
+  const headerRow = table.insertRow(0);
+  const createdDateHeader = document.createElement('th');
+  const idHeader = document.createElement('th');
+  const textHeader = document.createElement('th');
+  createdDateHeader.innerHTML = "Created At";
+  idHeader.innerHTML = "Tweet ID";
+  textHeader.innerHTML = "Tweet Text";
+  createdDateHeader.className = "table--id";
+  idHeader.className = "table--id";
+  textHeader.className = 'table--id';
+
+  headerRow.appendChild(idHeader);
+  headerRow.appendChild(createdDateHeader);
+  headerRow.appendChild(textHeader);
+
+  tweets.forEach(function (tweet) {
+    let tRow = tbody.insertRow(-1);
+    let tId = tRow.insertCell(-1);
+    let tCreatedDate = tRow.insertCell(-1);
+    let tText = tRow.insertCell(-1);
+    tId.innerHTML = tweet.id_str;
+    let date = new Date(tweet.created_at);
+    tCreatedDate.innerHTML = tweet.created_at;
+    tText.innerHTML = tweet.text;
   });
   table.appendChild(tbody);
 
