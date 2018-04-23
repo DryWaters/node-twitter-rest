@@ -2,11 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #657786;
 }
 
 .container {
   display: block;
   margin: 50px auto;
+  text-align: center;
 }
 
 .container__buttons {
@@ -19,16 +21,23 @@
 
 table {
   text-align: center;
-  border: 3px solid green;
   margin: 0 auto;
 }
 
-td {
-  border: 3px solid red;
+th, td {
+  padding: .75em .75em;
 }
 
 .table--id {
   font-size: 1.2em;
+  color: white;
+  background-color: #1DA1F2;
+  box-shadow: 2.5px 2.5px 1.25px 0px rgba(0,0,0,0.75);
+}
+
+.table__header {
+  font-size: 3em;
+  font-family: 'Arimo', sans-serif;
   font-weight: bold;
 }
 
@@ -43,10 +52,11 @@ td {
 }
 
 .headline__text {
-  color: #14171A;
+  color: #657786;
   font-family: 'Arimo', sans-serif;
-  font-size: 75px;
+  font-size: 5em;
   font-weight: bold;
+
 }
 
 .btn {
@@ -60,6 +70,25 @@ td {
 }
 
 .btn:hover {
+  cursor: pointer;
   background-color: #657786;
   box-shadow: 5px 5px 2.55px 0px rgba(0,0,0,0.75);
+}
+
+.btn--tweet {
+  padding: 5px;
+  font-family: 'Arimo', sans-serif;
+  background-color: #1DA1F2;
+  font-size: 1.25em;
+  margin: 10px;
+}
+
+.btn--tweet:hover {
+  cursor: pointer;
+  background-color: #657786;
+  box-shadow: 5px 5px 2.55px 0px rgba(0,0,0,0.75);
+}
+
+.btn--tweet > a {
+  color: white;
 }

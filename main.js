@@ -54,12 +54,18 @@ function openRequest(typeOfRequest, id) {
       break;
   }
 
-  request.onreadystatechange = function() {
+  request.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-      if (typeOfRequest === TYPE_OF_REQUEST.ALL_LINKS) {
-        displayAllLinks(JSON.parse(request.responseText));
+      let parsedJson = JSON.parse(request.responseText);
+      switch (typeOfRequest) {
+        case TYPE_OF_REQUEST.ALL_LINKS:
+          displayAllLinks(parsedJson.message);
+          break;
+        case TYPE_OF_REQUEST.ALL_USERS:
+          displayAllUsers(parsedJson.message);
+          break;
       }
-      // document.getElementById('json-return').innerHTML = request.responseText;
+
     }
   }
   console.log(url);
@@ -67,29 +73,57 @@ function openRequest(typeOfRequest, id) {
   request.send();
 }
 
-function displayAllLinks({message}) {
+function displayAllLinks(links) {
   const table = document.createElement('table');
-  const header = table.createTHead();
-  const thead = header.insertRow(0);
-  thead.innerHTML = 'HTML Links';
-
   const tbody = document.createElement('tbody');
-  
-  for (key in message) {
+  const header = document.createElement('h2');
+  header.innerHTML = 'All External Links';
+  header.className = 'table__header';
+
+  for (key in links) {
     let tRow = tbody.insertRow(-1);
-    tRow.className = 'table--id';
     let tCell = tRow.insertCell(0);
-    tCell.innerHTML = `Tweet with id: ${key}`;
-    message[key].forEach(function(url) {
+    tCell.className = 'table--id';
+    tCell.innerHTML = `Tweet with id: <span class='btn--tweet'><a onClick='openRequest(TYPE_OF_REQUEST.TWEET_BY_ID, ${key});'>${key}</a></span>`;
+    links[key].forEach(function (url) {
       tRow = tbody.insertRow(-1);
       tCell = tRow.insertCell(0);
-      tCell.innerHTML = url;
+      tCell.innerHTML = `<a href=${url}>${url}</a>`;
     })
     table.appendChild(tbody);
   }
-  
-  
   document.getElementById('json-return').innerHTML = '';
+  document.getElementById('json-return').appendChild(header);
   document.getElementById('json-return').appendChild(table);
-  
+}
+
+function displayAllUsers(users) {
+  const table = document.createElement('table');
+  const tbody = document.createElement('tbody');
+  const title = document.createElement('h2');
+  title.innerHTML = 'All Users';
+  title.className = 'table__header';
+  const headerRow = table.insertRow(0);
+  const userNameHeader = document.createElement('th');
+  const screenNameHeader = document.createElement('th');
+  userNameHeader.innerHTML = "User Name";
+  screenNameHeader.innerHTML = "Screen Name";
+  userNameHeader.className = "table--id";
+  screenNameHeader.className = "table--id";
+
+  headerRow.appendChild(userNameHeader);
+  headerRow.appendChild(screenNameHeader);
+
+  users.forEach(function (user) {
+    tRow = tbody.insertRow(-1);
+    tScreenName = tRow.insertCell(0);
+    tUserName = tRow.insertCell(0);
+    tUserName.innerHTML = user.name;
+    tScreenName.innerHTML = user.screen_name;
+  });
+  table.appendChild(tbody);
+
+  document.getElementById('json-return').innerHTML = '';
+  document.getElementById('json-return').appendChild(title);
+  document.getElementById('json-return').appendChild(table);
 }
