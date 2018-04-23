@@ -1,5 +1,6 @@
 let request = '';
-const baseAPIUrl = 'http://localhost:3000/api/';
+const baseAPIUrl = 'http://ec2-18-222-14-157.us-east-2.compute.amazonaws.com:3000/api/';
+// const baseAPIUrl = 'http://localhost:3000/api/';
 const TYPE_OF_REQUEST = {
   ALL_TWEETS: '',
   ALL_USERS: 'users',
