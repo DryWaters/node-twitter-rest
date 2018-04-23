@@ -26,6 +26,8 @@ table {
 
 th, td {
   padding: .75em .75em;
+  word-wrap: break-word;
+  max-width: 400px;
 }
 
 .table--id {

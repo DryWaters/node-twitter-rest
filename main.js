@@ -67,11 +67,16 @@ function openRequest(typeOfRequest, id) {
         case TYPE_OF_REQUEST.ALL_TWEETS:
           displayAllTweets(parsedJson.message);
           break;
+        case TYPE_OF_REQUEST.USER_BY_SCREEN_NAME:
+          displayUserByScreenName(parsedJson.message);
+          break;
+        case TYPE_OF_REQUEST.TWEET_BY_ID:
+          displayTweetById(parsedJson.message);
+          break;
       }
 
     }
   }
-  console.log(url);
   request.open('GET', url);
   request.send();
 }
@@ -153,6 +158,42 @@ function displayAllTweets(tweets) {
   });
   table.appendChild(tbody);
 
+  document.getElementById('json-return').innerHTML = '';
+  document.getElementById('json-return').appendChild(table);
+}
+
+function displayUserByScreenName(user) {
+  const table = document.createElement('table');
+  const tbody = document.createElement('tbody');
+  for (key in user) {
+    if (user.hasOwnProperty(key) && typeof user[key] !== 'object') {
+      let tRow = tbody.insertRow(-1);
+      let tKey = tRow.insertCell(-1);
+      let tValue = tRow.insertCell(-1);
+      tKey.innerHTML = key;
+      tKey.className = 'table--id';
+      tValue.innerHTML = user[key];
+    }
+  }
+  table.appendChild(tbody);
+  document.getElementById('json-return').innerHTML = '';
+  document.getElementById('json-return').appendChild(table);
+}
+
+function displayTweetById(tweet) {
+  const table = document.createElement('table');
+  const tbody = document.createElement('tbody');
+  for (key in tweet) {
+    if (tweet.hasOwnProperty(key) && typeof tweet[key] !== 'object') {
+      let tRow = tbody.insertRow(-1);
+      let tKey = tRow.insertCell(-1);
+      let tValue = tRow.insertCell(-1);
+      tKey.innerHTML = key;
+      tKey.className = 'table--id';
+      tValue.innerHTML = tweet[key];
+    }
+  }
+  table.appendChild(tbody);
   document.getElementById('json-return').innerHTML = '';
   document.getElementById('json-return').appendChild(table);
 }
