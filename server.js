@@ -6,7 +6,7 @@ const twitterJson = require('./favs.json');
 
 // Register all endpoints and attach callback functions
 router
-  .route('/')
+  .route('/tweets')
   .get(getAllTweets);
 
 router
@@ -18,11 +18,11 @@ router
   .get(getAllLinks);
 
 router
-  .route('/tweet/:tweet_id')
+  .route('/tweets/:tweet_id')
   .get(getTweetById);
 
 router
-  .route('/user/:user_screen_name')
+  .route('/users/:user_screen_name')
   .get(getUserByScreenName);
 
 // Set Express's default entry point to be /api

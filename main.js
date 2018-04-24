@@ -8,11 +8,11 @@ const baseAPIUrl = 'http://ec2-18-222-14-157.us-east-2.compute.amazonaws.com:300
 // object to contain constant
 // API Endpoints
 const TYPE_OF_REQUEST = {
-  ALL_TWEETS: '',
+  ALL_TWEETS: 'tweets',
   ALL_USERS: 'users',
   ALL_LINKS: 'links',
-  TWEET_BY_ID: 'tweet/',
-  USER_BY_SCREEN_NAME: 'user/'
+  TWEET_BY_ID: 'tweets/',
+  USER_BY_SCREEN_NAME: 'users/'
 }
 
 // call initilization function
