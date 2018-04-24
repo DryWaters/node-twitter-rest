@@ -57,6 +57,7 @@ function openRequest(typeOfRequest, id) {
   let url = baseAPIUrl;
   switch (typeOfRequest) {
     case TYPE_OF_REQUEST.ALL_TWEETS:
+      url += TYPE_OF_REQUEST.ALL_TWEETS;
       break;
     case TYPE_OF_REQUEST.ALL_USERS:
       url += TYPE_OF_REQUEST.ALL_USERS;
