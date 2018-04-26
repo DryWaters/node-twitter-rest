@@ -10,7 +10,7 @@ You should not need to call the server manually to access the endpoints as the
 HTML will call the endpoints for you, but if you want to call them manually the
 endpoints are :
 
-/api/tweets                        - All Tweets
+/api/tweets                  - All Tweets
 /api/links                   - All HTML Links
 /api/users                   - All users
 /api/users/:user_screen_name  - User information with the screen name given

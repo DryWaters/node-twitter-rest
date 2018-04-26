@@ -6,16 +6,33 @@ const baseAPIUrl = 'http://ec2-18-222-14-157.us-east-2.compute.amazonaws.com:300
 // const baseAPIUrl = 'http://localhost:3000/api/';
 
 // object to contain constant
-// API Endpoints
+// API Endpoints and callback 
+// function names
 const TYPE_OF_REQUEST = {
-  ALL_TWEETS: 'tweets',
-  ALL_USERS: 'users',
-  ALL_LINKS: 'links',
-  TWEET_BY_ID: 'tweets/',
-  USER_BY_SCREEN_NAME: 'users/'
+  ALL_TWEETS: {
+    END_POINT: 'tweets',
+    CALLBACK: displayAllTweets
+  },
+  ALL_USERS: {
+    END_POINT: 'users',
+    CALLBACK: displayAllUsers
+  },
+  ALL_LINKS: {
+    END_POINT: 'links',
+    CALLBACK: displayAllLinks
+  },
+  TWEET_BY_ID:  {
+    END_POINT: 'tweets/',
+    CALLBACK: displayTweetById
+  },
+  USER_BY_SCREEN_NAME: {
+    END_POINT: 'users/',
+    CALLBACK: displayUserByScreenName
+  }
 }
 
-// call initilization function
+// create the Ajax object,
+// register listeners with callbacks
 init();
 
 // creates a global HTTP request
@@ -25,7 +42,7 @@ function init() {
   // create an XMLHttpRequest Object
   if (window.XMLHttpRequest) {
     request = new XMLHttpRequest();
-  // create Microsoft ACtiveXObject
+  // create Microsoft ActiveXObject
   } else if (window.ActiveXObject) {
     try {
       request = new ActiveXObject('Msxlm2.XMLHTTP');
@@ -40,40 +57,37 @@ function init() {
   }
 
   // attach event listeners to buttons
-  document.getElementById('all-users').addEventListener('click', openRequest.bind(this, TYPE_OF_REQUEST.ALL_USERS));
-  document.getElementById('all-tweets').addEventListener('click', openRequest.bind(this, TYPE_OF_REQUEST.ALL_TWEETS));
-  document.getElementById('all-links').addEventListener('click', openRequest.bind(this, TYPE_OF_REQUEST.ALL_LINKS));
+  document.getElementById('all-users').addEventListener('click', 
+    openRequest.bind(
+      this,
+      TYPE_OF_REQUEST.ALL_USERS,
+      '')
+    );
+  document.getElementById('all-tweets').addEventListener('click', 
+    openRequest.bind(
+      this,
+      TYPE_OF_REQUEST.ALL_TWEETS,
+      '')
+    );
+  document.getElementById('all-links').addEventListener('click', 
+    openRequest.bind(
+      this,
+      TYPE_OF_REQUEST.ALL_LINKS,
+      '')
+    );
 }
 
 // function that creates a request
-// using a SWITCH on the request
-// it appends to the default /api
-// the endpoint needed for each type
-// of request
+// by appending to the default /api
+// endpoint, the type of request and 
+// a callback function that is stored 
+// in the TYPE_OF_REQUEST obj
 // PARAM id - is optional for requests
 // that need a id (tweet_by_id and 
-// user_by_screen_name)
+// user_by_screen_name), if not needed
+// an empty string is passed in
 function openRequest(typeOfRequest, id) {
-  let url = baseAPIUrl;
-  switch (typeOfRequest) {
-    case TYPE_OF_REQUEST.ALL_TWEETS:
-      url += TYPE_OF_REQUEST.ALL_TWEETS;
-      break;
-    case TYPE_OF_REQUEST.ALL_USERS:
-      url += TYPE_OF_REQUEST.ALL_USERS;
-      break;
-    case TYPE_OF_REQUEST.ALL_LINKS:
-      url += TYPE_OF_REQUEST.ALL_LINKS;
-      break;
-    case TYPE_OF_REQUEST.TWEET_BY_ID:
-      url += TYPE_OF_REQUEST.TWEET_BY_ID;
-      url += id
-      break;
-    case TYPE_OF_REQUEST.USER_BY_SCREEN_NAME:
-      url += TYPE_OF_REQUEST.USER_BY_SCREEN_NAME;
-      url += id
-      break;
-  }
+  let url = `${baseAPIUrl}${typeOfRequest.END_POINT}${id}`;
 
   // call back function that calls the dynamic
   // table building function depending on the type
@@ -83,24 +97,8 @@ function openRequest(typeOfRequest, id) {
   // if server error, displays error message
   request.onreadystatechange = function () {
     if (this.readyState === 4 && this.status === 200) {
-      let parsedJson = JSON.parse(request.responseText);
-      switch (typeOfRequest) {
-        case TYPE_OF_REQUEST.ALL_LINKS:
-          displayAllLinks(parsedJson.message);
-          break;
-        case TYPE_OF_REQUEST.ALL_USERS:
-          displayAllUsers(parsedJson.message);
-          break;
-        case TYPE_OF_REQUEST.ALL_TWEETS:
-          displayAllTweets(parsedJson.message);
-          break;
-        case TYPE_OF_REQUEST.USER_BY_SCREEN_NAME:
-          displayUserByScreenName(parsedJson.message);
-          break;
-        case TYPE_OF_REQUEST.TWEET_BY_ID:
-          displayTweetById(parsedJson.message);
-          break;
-      }
+      const parsedJson = JSON.parse(request.responseText);
+      typeOfRequest.CALLBACK(parsedJson.message);
     } else if (this.readyState === 4 && this.status === 404) {
       let h2 = document.createElement('h2');
       h2.innerHTML = 'Error finding requested object!';
