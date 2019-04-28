@@ -1,11 +1,6 @@
 Daniel Waters
 CS 174 - Section 1 - HW #5
 
-The HTML is located at:
-http://ec2-18-222-14-157.us-east-2.compute.amazonaws.com/node-twitter-rest/
-
-The NODE server is running at the same address with port 3000.
-
 You should not need to call the server manually to access the endpoints as the 
 HTML will call the endpoints for you, but if you want to call them manually the
 endpoints are :
